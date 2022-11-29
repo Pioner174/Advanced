@@ -11,4 +11,4 @@
         public IEnumerable<Person> People { get; set; }
     }
 }
-}
+
