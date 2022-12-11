@@ -11,19 +11,18 @@ builder.Services.AddDbContext<DataContext>(opts =>
 
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
-
+builder.Services.AddServerSideBlazor();
 
 var app = builder.Build();
 
 app.UseDeveloperExceptionPage();
 app.UseStaticFiles();
-app.UseRouting();
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllerRoute("controllers", "controllers/{controller=Home}/{action=Index}/{id?}");
-    endpoints.MapDefaultControllerRoute();
-    endpoints.MapRazorPages();
-});
+
+app.MapControllers();
+app.MapControllerRoute("controllers", "controllers/{controller=Home}/{action=Index}/{id?}");
+app.MapRazorPages();
+app.MapBlazorHub();
+
 
 var context = app.Services.CreateScope().ServiceProvider.GetRequiredService<DataContext>();
 
