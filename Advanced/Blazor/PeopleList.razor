@@ -16,7 +16,9 @@
         }
     </tbody>
 </table>
-<div class="form-group">
+
+<SelectFilter Values="@Cities" Title="City"autofocus="true" name="city" required="true" />
+@*<div class="form-group">
     <label for="city">City</label>
     <select name="city" class="form-control" @bind="SelectedCity">
         <option disabled selected value="">Select City</option>
@@ -27,7 +29,7 @@
                 </option>
         }
     </select>
-</div>
+</div>*@
 @code {
     [Inject]
     public DataContext? Context { get; set; }
