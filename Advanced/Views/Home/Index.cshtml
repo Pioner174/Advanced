@@ -2,7 +2,8 @@
 
 <h4 class="bg-primary text-white text-center p-2">People</h4>
 
-<component type="typeof(Advanced.Blazor.PeopleList)" render-mode="Server" />
+<component type="typeof(Advanced.Blazor.PeopleList)" render-mode="Server"
+param-itemcount="5" param-selecttitle="@("Location")" />
 
 @*<table class="table table-sm table-bordered table-striped">
     <thead>

@@ -17,7 +17,7 @@
     </tbody>
 </table>
 
-<SelectFilter Values="@Cities" Title="City"autofocus="true" name="city" required="true" />
+<SelectFilter Values="@Cities" Title="@SelectTitle"/>
 @*<div class="form-group">
     <label for="city">City</label>
     <select name="city" class="form-control" @bind="SelectedCity">
@@ -37,10 +37,17 @@
     public IEnumerable<Person>? People =>
         Context?.People.Include(p => p.Department).Include(p => p.Location);
 
-    public IEnumerable<string>? Cities => Context?.Locations.Select(l => l.City);
+    public IEnumerable<string>? Cities => Context?.Locations.Select(l => l.City).Take(ItemCount);
 
     public string SelectedCity { get; set; } = string.Empty;
 
     public string GetClass(string? city) =>
         SelectedCity == city ? "bg-info text-white" : "";
+
+    [Parameter]
+    public int ItemCount { get; set; } = 4;
+
+    [Parameter]
+    public string? SelectTitle { get; set; }
+
 }
