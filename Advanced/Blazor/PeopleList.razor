@@ -1,26 +1,18 @@
-﻿<TableTemplate>
+﻿<TableTemplate RowType="Person" RowData="People">
     <Header>
         <tr>
             <th>ID</th><th>Name</th><th>Dept</th><th>Location</th>
         </tr>
     </Header>
-    <Body>
-        @foreach (Person p in People ?? Enumerable.Empty<Person>())
-        {
-                <tr class="@GetClass(p?.Location?.City)">
-                    <td>@p?.PersonId</td>
-                    <td>@p?.Surname, @p?.FirstName</td>
-                    <td>@p?.Department?.Name</td>
-                    <td>@p?.Location?.City, @p?.Location?.Region</td>
-                </tr>
-        }
-    </Body>
-</TableTemplate>
-<ThemeWrapper Theme="info" Title="Location Selector">
-    <SelectFilter Values="@Cities" Title="@SelectTitle" @bind-SelectedValue="SelectedCity"/>
+    <RowTemplate Context="p">
+        <td>@p.PersonId</td>
+        <td>@p.Surname, @p.FirstName</td>
+        <td>@p.Department?.Name</td>
+        <td>@p.Location?.City, @p.Location?.Region</td>
+    </RowTemplate>
 
-    <button class="btn btn-primary mt-2" @onclick="@(()=> SelectedCity = "Oakland")">Change</button>
-</ThemeWrapper>
+</TableTemplate>
+
 @*<div class="form-group">
     <label for="city">City</label>
     <select name="city" class="form-control" @bind="SelectedCity">
@@ -37,21 +29,10 @@
     [Inject]
     public DataContext? Context { get; set; }
 
-    public IEnumerable<Person>? People =>
-        Context?.People.Include(p => p.Department).Include(p => p.Location);
+    public IEnumerable<Person>? People => Context?.People
+        .Include(p => p.Department)
+        .Include(p => p.Location);
 
-    public IEnumerable<string>? Cities => Context?.Locations.Select(l => l.City).Take(ItemCount);
-
-    public string SelectedCity { get; set; } = string.Empty;
-
-    public string GetClass(string? city) =>
-        SelectedCity == city ? "bg-info text-white" : "";
-
-    [Parameter]
-    public int ItemCount { get; set; } = 4;
-
-    [Parameter]
-    public string? SelectTitle { get; set; }
 
     //public void HandleCustom(string newValue)
     //{
