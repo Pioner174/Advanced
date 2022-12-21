@@ -1,6 +1,6 @@
 ﻿<div class="form-group">
     <lable for="select-@Title">@Title</lable>
-        <select name="select-@Title" class="form-control" @bind="SelectedValue" @attributes="Attrs">
+        <select name="select-@Title" class="form-control" @onchange="HandleSelect" value="@SelectedValue">
 
         <option disabled selected value="">Selecr @Title</option>
         @foreach(string val in Values)
@@ -21,5 +21,15 @@
 
     [Parameter(CaptureUnmatchedValues = true)]
     public Dictionary<string, object>? Attrs { get; set; }
+
+    [Parameter]
+    public EventCallback<string> CustomEvent { get; set; }
+
+    public async Task HandleSelect(ChangeEventArgs e)
+    {
+        SelectedValue = e.Value as string;
+
+        await CustomEvent.InvokeAsync(SelectedValue);
+    }
 
 }

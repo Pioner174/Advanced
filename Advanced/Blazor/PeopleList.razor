@@ -17,7 +17,7 @@
     </tbody>
 </table>
 
-<SelectFilter Values="@Cities" Title="@SelectTitle"/>
+<SelectFilter Values="@Cities" Title="@SelectTitle" CustomEvent="@HandleCustom"/>
 @*<div class="form-group">
     <label for="city">City</label>
     <select name="city" class="form-control" @bind="SelectedCity">
@@ -49,5 +49,10 @@
 
     [Parameter]
     public string? SelectTitle { get; set; }
+
+    public void HandleCustom(string newValue)
+    {
+        SelectedCity = newValue;
+    }
 
 }
