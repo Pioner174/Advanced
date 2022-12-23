@@ -29,6 +29,10 @@
     public async Task HandleSelect(ChangeEventArgs e)
     {
         SelectedValue = e.Value as string;
+        if(SelectedValue == "Sales")
+        {
+            throw new Exception("Sales cannot be selected");
+        }
 
         await SelectedValueChanged.InvokeAsync(SelectedValue);
     }
