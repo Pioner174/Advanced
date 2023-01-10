@@ -13,6 +13,8 @@ builder.Services.AddDbContext<DataContext>(opts =>
     opts.EnableSensitiveDataLogging(true);
 });
 
+builder.Services.AddSingleton<Advanced.Services.ToggleService>();
+
 var app = builder.Build();
 
 app.UseDeveloperExceptionPage();
