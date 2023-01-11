@@ -38,6 +38,8 @@
 
     private bool Enabled { get; set; } = true;
 
+    private static event EventHandler? ToggleEvent;
+
     public string ComputedClass { get; set; } = string.Empty;
 
     public void HandleClick()
@@ -77,4 +79,11 @@
         });
     }
 
+    [JSInvokable]
+    public static void ToggleEnabled() => ToggleEvent?.Invoke(null, new EventArgs());
+
+    protected override void OnInitialized()
+    {
+        ToggleEvent += (sender, args) => SetEnabled(!Enabled);
+    }
 }     
