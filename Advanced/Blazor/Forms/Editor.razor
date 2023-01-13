@@ -1,6 +1,7 @@
 ﻿@page "/forms/edit/{id:long}"
 @layout EmptyLayout
-@implements IDisposable
+@inherits OwningComponentBase<DataContext>
+
 
 <link href="/blazorValidation.css" rel="stylesheet"/>
 <h4 class="bg-primary text-center text-white p-2">Edit</h4>
@@ -61,8 +62,8 @@
     [Inject]
     public NavigationManager? NavManager { get; set; }
 
-    [Inject]
-    private DataContext? Context { get; set; }
+    //[Inject]
+    private DataContext? Context => Service;
 
     [Parameter]
     public long Id { get; set; }
@@ -96,12 +97,12 @@
 
     public void HandleInvalidSubmit() => FormSubmitMessage = "Invalid Data Submitted";
 
-    public void Dispose()
-    {
-        if(Context != null)
-        {
-            Context.Entry(PersonData).State = EntityState.Detached;
-        }
-    }
+    //public void Dispose()
+    //{
+    //    if(Context != null)
+    //    {
+    //        Context.Entry(PersonData).State = EntityState.Detached;
+    //    }
+    //}
 
 }
