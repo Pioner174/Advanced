@@ -35,6 +35,9 @@
     </tbody>
 </table>
 
+<button class="btn btn-primary" @onclick="@(()=> Counter++)">Increment</button>
+<span class="h5">Counter: @Counter</span>
+
 @code{
     [Inject]
     public DataContext? Context{ get; set; }
@@ -48,4 +51,6 @@
     }
 
     private string GetEditUrl(long id) => $"/forms/edit/{id}";
+
+    public int Counter { get; set; } = 0;
 }
