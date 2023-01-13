@@ -1,28 +1,44 @@
 ﻿@page "/forms/edit/{id:long}"
 @layout EmptyLayout
 
+<link href="~/blazorValidation.css" rel="stylesheet"/>
 <h4 class="bg-primary text-center text-white p-2">Edit</h4>
 
 <FormSpy PersonData="PersonData">
     <EditForm Model="PersonData">
+
+        <DataAnnotationsValidator />
+        <ValidationSummary />
         <div class="form-group">
             <label>Person ID</label>
             <InputNumber class="form-control" @bind-Value="PersonData.PersonId" disabled />
         </div>
+
         <div class="form-group">
             <label>Firstname</label>
+            <ValidationMessage For="@(()=> PersonData.FirstName)"/>
             <InputText class="form-control" @bind-Value="PersonData.FirstName" />
         </div>
+
+        <div class="form-group">
+            <label>Surname</label>
+            <ValidationMessage For="@(() => PersonData.Surname)" />
+            <InputText class="form-control" @bind-Value="PersonData.Surname" />
+        </div>
+
         <div class="form-group">
             <label>Dept ID</label>
+            <ValidationMessage For="@(()=> PersonData.DepartmentId)" />
             <CustomSelect TValue="long" Values="Departments"
                           Parser="@((string str) => long.Parse(str))"
                           @bind-Value="PersonData.DepartmentId">
                 <option selected disabled value="0">Choose a Department</option>
             </CustomSelect>
         </div>
+
         <div class="form-group">
             <label>Location ID</label>
+            <ValidationMessage For="@(() => PersonData.LocationId)" />
             <CustomSelect TValue="long" Values="Locations"
                           Parser="@((string str) => long.Parse(str))"
                           @bind-Value="PersonData.LocationId">
