@@ -11,6 +11,7 @@
 
 <EditForm Model="PersonData" OnValidSubmit="HandleValidSubmit" >
     <DataAnnotationsValidator />
+    <DeptStateValidator DepartmentId="2" State="CA" />
     @if (Mode == "Edit") {
         <div class="form-group">
             <label>ID</label>
