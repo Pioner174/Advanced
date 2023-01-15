@@ -44,10 +44,21 @@
 
     public IEnumerable<Person> People { get; set; } = Enumerable.Empty<Person>();
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        People = Context?.People?.Include(p => p.Department).Include(p => p.Location) ??
-            Enumerable.Empty<Person>();
+        await UpdateData();
+    }
+
+    private async Task UpdateData()
+    {
+        if(Context != null)
+        {
+            People = await Context.People.Include(p => p.Department).Include(p => p.Location).ToListAsync<Person>();
+        }
+        else
+        {
+            People = Enumerable.Empty<Person>();
+        }
     }
 
     private string GetEditUrl(long id) => $"/forms/edit/{id}";
