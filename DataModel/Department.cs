@@ -1,4 +1,7 @@
-﻿namespace Advanced.Models
+﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
+
+namespace Advanced.Models
 {
     public class Department
     {
@@ -6,6 +9,7 @@
 
         public string Name { get; set; }
 
-        public IEnumerable<Person> People { get; set; }
+        
+        public IEnumerable<Person>? People { get; set; }
     }
 }

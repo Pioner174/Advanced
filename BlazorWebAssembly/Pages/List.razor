@@ -59,19 +59,19 @@
     {
         if(Http != null)
         {
-            People = await Http.GetFromJsonAsync<Person[]>("/api/people") ?? Array.Empty<Person>();
+            People = await Http.GetFromJsonAsync<Person[]>("http://localhost:5000/api/people") ?? Array.Empty<Person>();
         }
     }
 
-    private string GetEditUrl(long id) => $"forms/edit/{id}";
+    private string GetEditUrl(long id) => $"http://localhost:5000/webassembly/forms/edit/{id}";
 
-    private string GetDetailsUrl(long id) => $"forms/details/{id}";
+    private string GetDetailsUrl(long id) => $"http://localhost:5000/webassembly/forms/details/{id}";
 
     public async Task HandleDelete(Person p)
     {
         if(Http != null)
         {
-            HttpResponseMessage resp = await Http.DeleteAsync($"/api/people/{p.PersonId}");
+            HttpResponseMessage resp = await Http.DeleteAsync($"http://localhost:5000/api/people/{p.PersonId}");
 
             if (resp.IsSuccessStatusCode)
             {
