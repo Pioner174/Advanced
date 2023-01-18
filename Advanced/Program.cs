@@ -27,9 +27,9 @@ app.MapRazorPages();
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
 
-var context = app.Services.CreateScope().ServiceProvider.GetRequiredService<DataContext>();
+var _dataContext = app.Services.CreateScope().ServiceProvider.GetRequiredService<DataContext>();
 
-SeedData.SeedDatabase(context);
+SeedData.SeedDatabase(_dataContext);
 
 app.Run();
 
