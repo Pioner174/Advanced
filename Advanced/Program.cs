@@ -41,6 +41,7 @@ var app = builder.Build();
 app.UseDeveloperExceptionPage();
 app.UseStaticFiles();
 
+app.UseAuthentication();
 
 app.MapControllers();
 app.MapControllerRoute("controllers", "controllers/{controller=Home}/{action=Index}/{id?}");

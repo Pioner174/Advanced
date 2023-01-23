@@ -3,13 +3,14 @@
 
 <table class="table table-sm table-bordered">
     <tbody>
-        @if (Model.Cookie == null) {
-            <tr><th class="text-center">No Identity Cookie</th></tr>
-        } else {
-            <tr>
-                <th>Cookie</th>
-                <td class="text-break">@Model.Cookie</td>
-            </tr>
+        @if (Model.IdentityUser == null)
+        {
+                <tr><th class="text-center">No User</th></tr>
+        }
+        else
+        {
+                <tr><th>Name</th><td>@Model.IdentityUser.UserName</td></tr>
+                <tr><th>Email</th><td>@Model.IdentityUser.Email</td></tr>
         }
     </tbody>
 </table>
@@ -17,11 +18,22 @@
 @functions {
     public class DetailsModel : PageModel {
 
-        public string? Cookie { get; set; }
+        private UserManager<IdentityUser> userManager;
 
-        public void OnGet()
+        public DetailsModel(UserManager<IdentityUser> manager)
         {
-            Cookie = Request.Cookies[".AspNetCore.Identity.Application"];
+            userManager = manager;
         }
+
+        public IdentityUser? IdentityUser { get; set; }
+
+        public async Task OnGetAsync()
+        {
+            if (User.Identity != null && User.Identity.IsAuthenticated)
+            {
+                IdentityUser = await userManager.FindByNameAsync(User.Identity.Name);
+            }
+        }
+
     }
 }
