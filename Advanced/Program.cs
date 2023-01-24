@@ -42,6 +42,7 @@ app.UseDeveloperExceptionPage();
 app.UseStaticFiles();
 
 app.UseAuthentication();
+app.UseAuthorization();  
 
 app.MapControllers();
 app.MapControllerRoute("controllers", "controllers/{controller=Home}/{action=Index}/{id?}");
@@ -55,6 +56,8 @@ app.MapFallbackToFile("/webassembly/{*path:nonfile}", "/webassembly/index.html")
 var _dataContext = app.Services.CreateScope().ServiceProvider.GetRequiredService<DataContext>();
 
 SeedData.SeedDatabase(_dataContext);
+
+IdentitySeedData.CreateAdminAccount(app.Services, app.Configuration);
 
 app.Run();
 
